@@ -1,0 +1,11 @@
+# Files
+
+.DS_Store
+
+# Directories
+
+.idea/
+.pgdata/
+bin/
+obj/
+out/
