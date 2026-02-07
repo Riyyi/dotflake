@@ -15,6 +15,9 @@
     in
     {
 
+      # ====================================
+      # Development shell
+
       devShells = forAllSystems (
         system:
         let
@@ -70,6 +73,9 @@ EOF
         }
       );
 
+      # ====================================
+      # Package
+
       packages = forAllSystems (
         system:
         let
@@ -77,9 +83,8 @@ EOF
             inherit system;
             config.allowUnfree = true;
           };
-        in
-        {
-          default = pkgs.buildDotnetModule {
+
+          project = pkgs.buildDotnetModule {
             pname = "dotflake";
             version = "0.1.0";
 
@@ -87,20 +92,17 @@ EOF
 
             dotnet-sdk = pkgs.dotnetCorePackages.sdk_9_0-bin;
             dotnet-runtime = pkgs.dotnetCorePackages.aspnetcore_9_0-bin;
-            dotnetBuildFlags = [ "--no-self-contained" ];
 
-            projectFile = ./dotflake.csproj;
+            projectFile = "dotflake.sln"; # NOTE: this is relative to ${src}!
             nugetDeps = ./deps.json;
-
             selfContainedBuild = false;
           };
+        in
+        {
+          default = project;
+          fetch-deps = project.fetch-deps;
         }
       );
 
     };
 }
-
-# Potential interesting packages
-# - https://github.com/cachix/devenv
-# - https://www.youtube.com/watch?v=uOa6xazzj-s
-# - https://www.youtube.com/watch?v=VXB4e11lHtw

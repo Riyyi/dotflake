@@ -4,9 +4,9 @@
 
 ## Prerequisites
 
-- nix
-- .NET SDK 9
 - Git
+- Nix
+- .NET SDK 9
 
 ## Usage
 
@@ -20,6 +20,16 @@ nix develop
 
 * PostgreSQL runs on port 5432
 * Credentials and DB name are defined in `appsettings.Development.json`
+
+## Packaging
+
+When project depencies change, Nix should be informed.
+This can be done with the following commands.
+
+```sh
+nix build .#fetch-deps
+./result deps.json
+```
 
 # References
 
