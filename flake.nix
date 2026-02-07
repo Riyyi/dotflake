@@ -28,9 +28,8 @@
         in
         {
           default = pkgs.mkShell {
-            packages = with pkgs; [
+            buildInputs = with pkgs; [
               dotnetCorePackages.sdk_9_0-bin
-              nuget-to-json
               postgresql_16
             ];
 
