@@ -6,7 +6,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }:
+    { self, nixpkgs, ... }:
     let
       forAllSystems = nixpkgs.lib.genAttrs [
         "aarch64-darwin"
@@ -103,6 +103,13 @@ EOF
           fetch-deps = project.fetch-deps;
         }
       );
+
+      apps = forAllSystems (system: {
+        default = {
+          type = "app";
+          program = "${self.packages.${system}.default}/bin/dotflake";
+        };
+      });
 
     };
 }
