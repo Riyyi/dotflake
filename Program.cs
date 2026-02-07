@@ -3,6 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add a way to inject appsettings from outside the working directory
+builder.Configuration.AddJsonFile(
+    Environment.GetEnvironmentVariable("ASPNETCORE_CONFIG"),
+    optional: true,
+    reloadOnChange: false);
+
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
